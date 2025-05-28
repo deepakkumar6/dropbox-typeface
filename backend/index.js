@@ -32,7 +32,7 @@ app.post("/upload", upload.single("file"), async (req, res) => {
 });
 
 
-// List files
+// List files of all users
 app.get("/files", async (req, res) => {
   try {
     const result = await db.query("SELECT * FROM files ORDER BY id DESC");
