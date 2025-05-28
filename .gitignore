@@ -1,38 +1,46 @@
-# Node
-node_modules/
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# Node dependencies (ignore in all subfolders)
+**/node_modules/
+
+# Build output (frontend, backend or others)
+**/build/
+**/dist/
+
+# Production and local env files
+.env
+**/.env*
+!.env.example
+
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
-# Logs
-logs
-*.log
-*.log.*
+# Testing
+coverage/
+**/coverage/
 
-# Environment variables
-.env
-
-# React build
-/build
-/dist
-
-# Mac system files
+# Misc
 .DS_Store
-
-# Docker
-**/data/
-**/volume/
-docker-compose.override.yml
-
-# VSCode
-.vscode/
-
-# OS
 Thumbs.db
 
-# Coverage & testing
-coverage/
-.nyc_output/
+# IDE settings
+.vscode/
+.idea/
+*.swp
 
-# Optional: ignore uploads if you store them locally
-uploads/
+# OS system files
+Icon?
+ehthumbs.db
+Desktop.ini
+
+# Docker temp/logs
+**/tmp/
+*.log
+
+# Other package manager lockfiles (optional)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
