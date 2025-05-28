@@ -1,0 +1,26 @@
+# Node modules
+node_modules
+frontend/node_modules
+backend/node_modules
+
+# Build output
+build
+dist
+
+# Logs
+*.log
+
+# Env files
+.env
+
+# OS and editor junk
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea
+.vscode
+
+# Git
+.git
+.gitignore
