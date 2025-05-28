@@ -1,0 +1,38 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs
+*.log
+*.log.*
+
+# Environment variables
+.env
+
+# React build
+/build
+/dist
+
+# Mac system files
+.DS_Store
+
+# Docker
+**/data/
+**/volume/
+docker-compose.override.yml
+
+# VSCode
+.vscode/
+
+# OS
+Thumbs.db
+
+# Coverage & testing
+coverage/
+.nyc_output/
+
+# Optional: ignore uploads if you store them locally
+uploads/
