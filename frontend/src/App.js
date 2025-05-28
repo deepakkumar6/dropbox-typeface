@@ -6,7 +6,7 @@ function App() {
   const [files, setFiles] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
 
-  const backendUrl = "http://localhost:5000"; //  "http://backend:5000";
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 
   useEffect(() => {
