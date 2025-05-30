@@ -2,11 +2,13 @@
 import React, { useState } from "react";
 import Button from "./button";
 import "./uploadform.css";
+import { useAppContext } from "../context/app-context";
+import { useBanner } from "../context/banner-context";
 
-const allowedFormats = [".txt",  ".pdf", ".docx", ".xlsx", ".png", ".jpg", ".jpeg", ".gif", ".pptx", ".zip", ".rar"];
-
-const UploadForm = ({ backendUrl, onUploadSuccess }) => {
+const UploadForm = ({ onUploadSuccess }) => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const { backendUrl, supportedUploadFormats } = useAppContext();
+  const { showBanner } = useBanner();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -15,7 +17,7 @@ const UploadForm = ({ backendUrl, onUploadSuccess }) => {
     if (!file) return;
 
     const ext = file.name.slice(file.name.lastIndexOf(".")).toLowerCase();
-    if (!allowedFormats.includes(ext)) {
+    if (!supportedUploadFormats.includes(ext)) {
       setError(`Unsupported file type: ${ext}`);
       setSelectedFile(null);
       return;
@@ -42,14 +44,19 @@ const UploadForm = ({ backendUrl, onUploadSuccess }) => {
         body: formData,
       });
 
-      if (!res.ok) throw new Error("Upload failed");
+      if (!res.ok) {
+        throw new Error("Upload failed");
+        showBanner("Upload failed. Please try again.", "error");
+      }
 
       setSelectedFile(null);
       setError("");
       onUploadSuccess();
+      showBanner("File uploaded successfully!", "success");
     } catch (err) {
       console.error(err);
       setError("Upload failed. Try again.");
+      showBanner("Upload failed. Please try again.", "error");
     } finally {
       setLoading(false);
     }
@@ -57,13 +64,14 @@ const UploadForm = ({ backendUrl, onUploadSuccess }) => {
 
   return (
     <form onSubmit={handleUpload} className="upload-form">
-      <label className="custom-file-upload">
-        <input type="file" onChange={handleFileChange} />
-        Choose File
-      </label>
+      <div className="upload-header">
+        <label className="custom-file-upload">
+          <input type="file" onChange={handleFileChange} />
+          Choose File
+        </label>
+        {selectedFile && <div className="file-info">Selected file: {selectedFile.name}</div>}
 
-      {selectedFile && <div className="file-info">Selected file: {selectedFile.name}</div>}
-      {error && <div className="error-message">{error}</div>}
+      </div>
 
       <Button type="primary" disabled={loading}>
         {loading ? "Uploading..." : "Upload"}

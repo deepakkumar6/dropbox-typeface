@@ -8,6 +8,15 @@
     border-radius: 6px;
 }
 
+.fileListEmptyStatus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    border: 4px dotted #ddd;
+    border-radius: 6px;
+}
+
 .fileListStatusError {
     display: flex;
     align-items: center;
@@ -17,4 +26,51 @@
     border-radius: 6px;
     background-color: rgb(245, 136, 136);
 
+}
+
+.file-list {
+  height: 300px;
+}
+
+.file-list-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  background-color: #f0f0f0;
+  font-weight: bold;
+  border-bottom: 2px solid #ccc;
+}
+
+.file-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.file-info {
+  display: grid;
+  grid-template-columns: 300px 100px 150px 150px;
+  gap: 10px;
+  flex: 1;
+  align-items: center;
+}
+
+.file-name {
+  font-size: 14px;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-type,
+.file-date,
+.file-time {
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

@@ -2,26 +2,28 @@ import React, { useState, useEffect } from "react";
 import "../App.css";
 import FileList from "../components/file-list";
 import UploadForm from "../components/uploadform";
+import Banner from "../components/banner";
+import { useBanner } from "../context/banner-context";
 
 
 function Home() {
-  const [files, setFiles] = useState([]);
-  const [selectedFile, setSelectedFile] = useState(null);
   const [refreshList, setRefreshList] = useState(false);
-
-  const backendUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+  const { banner } = useBanner();
 
   return (
     <div className="App">
-      <h2>Dropbox</h2>
+      <div className="content">
+        <h2>FileNest</h2>
+        <Banner text={banner.text} type={banner.type} onClose={() => {}} />
+        <UploadForm
+          onUploadSuccess={() => setRefreshList((prev) => !prev)}
+        />
+        
+        <h3>Uploaded Files</h3>
+        <FileList refreshList={refreshList} />
 
-      <UploadForm
-        backendUrl={backendUrl}
-        onUploadSuccess={() => setRefreshList((prev) => !prev)}
-      />
-
-      <h3>Uploaded Files</h3>
-      <FileList backendUrl={backendUrl} refreshList={refreshList} />
+      </div>
+      
     </div>
   );
 }
