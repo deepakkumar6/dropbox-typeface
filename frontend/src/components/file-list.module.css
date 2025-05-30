@@ -1,0 +1,20 @@
+
+.fileListStatus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.fileListStatusError {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: rgb(245, 136, 136);
+
+}

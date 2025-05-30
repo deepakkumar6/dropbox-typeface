@@ -14,7 +14,6 @@
   justify-content: center;
 }
 
-/* Text wrapper to ensure truncation works even inside span */
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
@@ -23,7 +22,6 @@
   width: 100%;
 }
 
-/* Button Types */
 .btn.primary {
   background-color: #3f51b5;
   color: white;

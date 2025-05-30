@@ -15,9 +15,19 @@ app.use("/uploads", express.static("uploads"));
 
 const upload = multer({ dest: "uploads/" });
 
-// upload file
 app.post("/upload", upload.single("file"), async (req, res) => {
   const { originalname, filename, mimetype } = req.file;
+
+  const allowedMimeTypes = [
+    "text/plain",
+    "application/json",
+    "image/png",
+    "image/jpeg",
+  ];
+
+  if (!allowedMimeTypes.includes(mimetype)) {
+    return res.status(400).json({ success: false, message: "Unsupported file type" });
+  }
 
   try {
     await db.query(
@@ -42,6 +52,44 @@ app.get("/files", async (req, res) => {
     res.status(500).send("Error fetching files");
   }
 });
+
+// Preview file content
+app.get("/files/:id", async (req, res) => {
+  try {
+    const result = await db.query("SELECT * FROM files WHERE id = $1", [req.params.id]);
+    const file = result.rows[0];
+
+    if (!file) return res.status(404).send("File not found");
+
+    const filePath = path.join(__dirname, "uploads", file.stored_name);
+
+    // Only allow previewing well-known formats
+    const allowedPreviewTypes = [
+      "text/plain",
+      "application/json",
+      "image/png",
+      "image/jpeg",
+    ];
+
+    if (!allowedPreviewTypes.includes(file.type)) {
+      return res.status(415).send("Unsupported preview format");
+    }
+
+    res.setHeader("Content-Type", file.type);
+
+    if (file.type.startsWith("image/")) {
+      res.sendFile(filePath);
+    } else {
+      const fs = require("fs");
+      const content = fs.readFileSync(filePath, "utf-8");
+      res.send(content);
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error previewing file");
+  }
+});
+
 
 // Download file
 app.get("/download/:id", async (req, res) => {
